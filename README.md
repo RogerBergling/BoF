@@ -112,7 +112,7 @@ Log data, item 11
  Address=625014DF
  Message=  0x625014df : jmp esp |  {PAGE_EXECUTE_READ} [essfunc.dll] ASLR: False, Rebase: False, SafeSEH: False, OS: False, v-1.0- (C:\Users\win7.INVID\Desktop\vulnerable-apps\chat server\essfunc.dll)
 
-##Gatekeepe
+## Gatekeeper
 SMB
 
 gatekepper.exe
