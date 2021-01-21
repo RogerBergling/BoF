@@ -1,6 +1,6 @@
 import socket
 
-ip = "10.10.168.49"
+ip = "10.10.103.222"
 port = 31337
 prefix = ""
 offset = 146 
