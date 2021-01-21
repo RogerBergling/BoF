@@ -17,7 +17,7 @@ for string in buffer:
         s.settimeout(timeout)
         connect = s.connect((ip, port))
         s.recv(1024)
-        #Sending the username "roger"
+        #Sending the username "roger" and newline
         s.send('roger ' + "\r\n")
         s.recv(1024)
         #Sending the "A" charactes as a message Because fuzzing username did not work
