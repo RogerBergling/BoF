@@ -19,56 +19,45 @@ The goal here is to get control of EIP int the stack, for that to happend we nee
 ### Step 2.1 (fuzz.py)
 Crash the application with fuzz.py and see if EIP contains AAAA.
 What is needed in the script. 
-ip
-port
-string
+ip, port, string
+
 We also need to verify with ex. Immunity Debugger that EIP contains AAAA
 
 
 ### Step 2. Crash the application and find offset (payload1.py)
 Here we want to try finding out if we can control the buffer
 We create a payload that are random with pattern_create.rb and then verify if we can find the offset for example with Immunty Debugger.
-ip
-port
-overflow
-payload (random data)
-buffer
+
+ip, port, overflow, payload (random data), buffer
+
 Immunity Debugger and mona are used for this
 
 ### Step 2.2 Verify the offset (payload2.py)
 Here we just verify that all is correct
-ip
-port
-offsett
-retn
-payload
-buffer
+
+ip, port, offsett, retn, payload, buffer, 
+
 Immunity Debugger and mona are used for this
 
 ## Step 3 Find bad characters that we can not use in our all characters \x00  (payload3.py)
-ip
-port
-offsett
-retn
-payload = bad charachter
-buffer
+ip, port, offsett, retn, payload = bad charachter, buffer
+
 Immunity Debugger and mona are used for this
 
 !mona bytearray -b "\x00"
+
 !mona compare -f C:\mona\oscp\bytearray.bin -a "ESP"
+
  Message=Possibly bad chars: 01 02 03 04
 
 
 ## Step 3.1 Find characters minus 3.1 founded  characters (payload3.py edited)
-ip
-port
-offsett
-retn
-payload = bad charachter
-buffer
+ip, port, offsett, retn, payload = bad charachter, buffer
+
 Immunity Debugger and mona are used for this
 
 !mona bytearray -b "\x00\x01"
+
 !mona compare -f C:\mona\"procename"bytearray.bin -a "ESP"
 
 Do this until you have Unmodified 
@@ -79,13 +68,8 @@ In mona after step 3 and add the bad characters that you find.
 Choose a nice adress in the list
 
 ## Step 5 Creating the payload (payload4.py)
-ip
-port
-offsett
-retn
-payload = buf
-padding
-buffer
+ip, port, offsett, retn, payload = buf, padding, buffer
+
 Immunity Debugger and mona are used for this
 
 Here you need to know what OS is running the application. It is hard to create a reverse shell from Windows machine with a payload for Linux.
